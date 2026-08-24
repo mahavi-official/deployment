@@ -13,8 +13,23 @@ const TARGET_HOST = "127.0.0.1";
 
 const BACKEND_PREFIXES = ["/api", "/docs", "/health", "/sitemap.xml", "/sitemaps"];
 
+/**
+ * Paths under a backend prefix that the *frontend* owns, checked first.
+ *
+ * `/api/revalidate` is a Next.js route handler — it is how an admin write
+ * drops the matching cache tag. Without this exception the `/api` prefix above
+ * hands it to Fastify, which answers 404, and every page keeps serving the
+ * cached copy until its TTL expires.
+ */
+const FRONTEND_PATHS = ["/api/revalidate"];
+
+function matches(pathname, prefixes) {
+  return prefixes.some((p) => pathname === p || pathname.startsWith(p + "/"));
+}
+
 function isBackendPath(pathname) {
-  return BACKEND_PREFIXES.some((p) => pathname === p || pathname.startsWith(p + "/"));
+  if (matches(pathname, FRONTEND_PATHS)) return false;
+  return matches(pathname, BACKEND_PREFIXES);
 }
 
 function targetPortFor(pathname) {
