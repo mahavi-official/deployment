@@ -94,6 +94,19 @@ echo "[startup] starting backend (Fastify) on 127.0.0.1:4000"
 (cd "$ROOT/backend" && PORT=4000 NODE_ENV=production node node_modules/tsx/dist/cli.mjs src/index.ts) &
 BACKEND_PID=$!
 
+# Next ages its fetch Data Cache off each cache file's mtime, not off anything
+# recorded inside the entry. A cache directory that outlives a deploy -- or one
+# whose mtimes get refreshed by the unzip -- is therefore indistinguishable
+# from one written a moment ago, so its entries never go stale and the site
+# serves whatever happened to be cached then, forever. /research sat on a
+# deleted seed listing this way while the API was returning a published paper,
+# and no amount of waiting cleared it because `revalidate` was never reached.
+#
+# The cache is disposable: dropping it costs one API call per unique request on
+# a cold start and removes the failure mode outright.
+echo "[startup] clearing Next.js fetch cache (stale entries survive deploys otherwise)"
+rm -rf "$ROOT/frontend/.next/cache/fetch-cache"
+
 echo "[startup] starting frontend (Next.js) on 127.0.0.1:3000"
 (cd "$ROOT/frontend" && PORT=3000 NODE_ENV=production node node_modules/next/dist/bin/next start -H 0.0.0.0 -p 3000) &
 FRONTEND_PID=$!

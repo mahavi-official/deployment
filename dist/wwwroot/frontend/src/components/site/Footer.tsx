@@ -63,12 +63,12 @@ export async function Footer() {
       <div className="border-b border-white/10">
         <div className="container-page grid gap-8 py-14 md:grid-cols-2 md:items-center">
           <div>
-            <span className="eyebrow text-flame-400">Stay close</span>
+            <span className="eyebrow text-[#ef9f00]">Stay close</span>
             <h2 className="mt-2 text-2xl text-white md:text-3xl">
               New research and writing, as it is published
             </h2>
             <p className="mt-3 max-w-md text-sm text-sand-300/80">
-              An occasional letter. No campaigns, no resale of your address, one click to leave.
+              Our home for research, scholarship, writing, and digital platform on wisdom, culture, heritage, science & innovation.
             </p>
           </div>
           <div className="md:justify-self-end md:w-full md:max-w-md">
@@ -109,7 +109,7 @@ export async function Footer() {
 
         {COLUMNS.map((column) => (
           <nav key={column.title} aria-label={column.title} className="md:col-span-2">
-            <h3 className="text-[0.6875rem] font-semibold tracking-[0.16em] text-flame-400 uppercase">
+            <h3 className="text-[0.6875rem] font-semibold tracking-[0.16em] text-[#ef9f00] uppercase">
               {column.title}
             </h3>
             <ul className="mt-4 space-y-2.5">
@@ -129,7 +129,7 @@ export async function Footer() {
 
         {(email || phone || address) && (
           <div className="md:col-span-2">
-            <h3 className="text-[0.6875rem] font-semibold tracking-[0.16em] text-flame-400 uppercase">
+            <h3 className="text-[0.6875rem] font-semibold tracking-[0.16em] text-[#ef9f00] uppercase">
               Contact
             </h3>
             <ul className="mt-4 space-y-3 text-sm text-sand-300/80">

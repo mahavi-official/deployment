@@ -57,7 +57,7 @@ export function Logo({
             tone === "inverse" ? "text-white" : "text-ink"
           )}
         >
-          Radha<span className="text-flame-500">kundah</span>
+          Radha<span className="text-[#ef9f00]">kundah</span>
         </span>
         <span
           className={cn(
@@ -67,7 +67,7 @@ export function Logo({
             tone === "inverse" ? "text-sand-300" : "text-ink-muted"
           )}
         >
-          Research &amp; Tradition
+          Research &amp; wisdom
         </span>
       </span>
     </span>
