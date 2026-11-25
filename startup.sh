@@ -53,7 +53,7 @@ trap cleanup SIGTERM SIGINT
 # deploy always rebuilds -- source-only changes don't touch the lockfiles and
 # would otherwise be served from a stale .next.
 STAMP="$ROOT/.build-stamp"
-CURRENT_STAMP="$(cat "$DEPLOY_DIR/deploy-id" "$ROOT/backend/package-lock.json" "$ROOT/frontend/package-lock.json" 2>/dev/null | shasum | cut -d' ' -f1)"
+CURRENT_STAMP="$(cat "$DEPLOY_DIR/deploy-id" "$ROOT/backend/package-lock.json" "$ROOT/frontend/package-lock.json" 2>/dev/null | sha256sum | cut -d' ' -f1)"
 
 if [ -f "$STAMP" ] && [ "$(cat "$STAMP")" = "$CURRENT_STAMP" ] \
    && [ -d "$ROOT/backend/node_modules" ] && [ -d "$ROOT/frontend/.next" ]; then
