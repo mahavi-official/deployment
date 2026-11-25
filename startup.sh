@@ -91,7 +91,10 @@ echo "[startup] starting backend (Fastify) on 127.0.0.1:4000"
 # source uses the "@/*" tsconfig alias and extensionless relative imports,
 # both of which tsx resolves the same way it already does in dev, and
 # neither of which Node's strict ESM resolver accepts on plain compiled JS.
-(cd "$ROOT/backend" && PORT=4000 NODE_ENV=production node node_modules/tsx/dist/cli.mjs src/index.ts) &
+(cd "$ROOT/backend" && while true; do
+  HOST=127.0.0.1 PORT=4000 NODE_ENV=production node node_modules/tsx/dist/cli.mjs src/index.ts
+  echo "[startup] backend exited, restarting in 5s"; sleep 5
+done) &
 BACKEND_PID=$!
 
 # Next ages its fetch Data Cache off each cache file's mtime, not off anything
@@ -108,7 +111,10 @@ echo "[startup] clearing Next.js fetch cache (stale entries survive deploys othe
 rm -rf "$ROOT/frontend/.next/cache/fetch-cache"
 
 echo "[startup] starting frontend (Next.js) on 127.0.0.1:3000"
-(cd "$ROOT/frontend" && PORT=3000 NODE_ENV=production node node_modules/next/dist/bin/next start -H 0.0.0.0 -p 3000) &
+(cd "$ROOT/frontend" && while true; do
+  PORT=3000 NODE_ENV=production node node_modules/next/dist/bin/next start -H 127.0.0.1 -p 3000
+  echo "[startup] frontend exited, restarting in 5s"; sleep 5
+done) &
 FRONTEND_PID=$!
 
 echo "[startup] all processes launched; gateway pid=$GATEWAY_PID backend pid=$BACKEND_PID frontend pid=$FRONTEND_PID"
