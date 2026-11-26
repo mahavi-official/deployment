@@ -23,7 +23,7 @@ OUT="$HERE/dist/wwwroot"
 EXCLUDES=(
   --exclude=node_modules --exclude=.git --exclude=dist
   --exclude='.env*' --exclude=tests --exclude=coverage
-  --exclude=backups --exclude='*.sql' --exclude='*.dump' --exclude='*.log'
+  --exclude=backups --exclude='*.dump' --exclude='*.log'
 )
 
 # Find Python (python or python3).
